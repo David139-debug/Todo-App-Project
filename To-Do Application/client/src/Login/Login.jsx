@@ -40,7 +40,7 @@ const Login = () => {
         }
     
         try {
-            const response = await axios.post("http://localhost:5000/login", formData);
+            const response = await axios.post("/login", formData);
             createSession(response.data);
             navigate("/todo");
         } catch (err) {

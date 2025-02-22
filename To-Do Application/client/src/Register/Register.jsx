@@ -79,8 +79,8 @@ const Register = ({onToggleForm}) => {
                     password: formData.password
                 };
                 
-                const response = await axios.post("http://localhost:5000/register", newUser);
-                const createdCookie = createSession(response.data);
+                const response = await axios.post("https://todo-app-project-eexq.onrender.com/register", newUser);
+                createSession(response.data);
                 console.log(response.data)
                 navigate("/todo");
         }

@@ -39,7 +39,7 @@ const TodoWrapper1 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/getAllTasks");
+            const response = await axios.get("https://todo-app-project-eexq.onrender.com/getAllTasks");
             const tasks = response.data.filter(task => task.userId === userId);
             const formattedTasks = tasks.map(task => ({
                 ...task,
@@ -53,7 +53,7 @@ const TodoWrapper1 = () => {
     };
 
     const fetchUserData = async () => {
-        const response = await axios.get(`http://localhost:5000/getUser/${userId}`);
+        const response = await axios.get(`https://todo-app-project-eexq.onrender.com/getUser/${userId}`);
         setUserName(response.data.name);
     };
     
@@ -192,7 +192,7 @@ const TodoWrapper1 = () => {
 
         data.status = "Pending";
 
-        const response = await axios.post("http://localhost:5000/addTask", data);
+        const response = await axios.post("https://todo-app-project-eexq.onrender.com/addTask", data);
         const formattedTask = {
             ...response.data,
             date: task.date
@@ -203,7 +203,7 @@ const TodoWrapper1 = () => {
     };
 
     const handleRemoveTask =  async (id) => {
-        await axios.delete(`http://localhost:5000/removeTask/${id}`);
+        await axios.delete(`https://todo-app-project-eexq.onrender.com/removeTask/${id}`);
         const updatedTasks = displayedTasks.filter(task => task._id !== id);
         setDisplayedTasks(updatedTasks);
         setAllTasks(updatedTasks);
@@ -211,7 +211,7 @@ const TodoWrapper1 = () => {
 
     const handleCompletedTask = async (id) => {
         try {
-            await axios.put(`http://localhost:5000/removeTask/${id}/completed`);
+            await axios.put(`https://todo-app-project-eexq.onrender.com/removeTask/${id}/completed`);
             setDisplayedTasks(prevTasks => 
                 prevTasks.map(task => 
                     task._id === id ? { ...task, status: "Completed" } : task
