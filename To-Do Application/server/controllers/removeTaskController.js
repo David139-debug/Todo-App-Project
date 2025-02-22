@@ -15,7 +15,6 @@ const handleRemoveTask = async (req, res) => {
     }
 };
 
-
 const handleCompleted = async (req, res) => {
     const { taskId } = req.params;
 
