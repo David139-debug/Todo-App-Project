@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(img/login-background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 10000px inset;
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.7);
+    width: 40%;
+}
+
+.loginForm {
+    padding: 1em;
+    color: white;
+}
+
+.loginForm h1 {
+    text-align: center;
+}
+
+.loginForm div{
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.loginForm label {
+    display: block;
+    margin-bottom: .5em;
+}
+
+input {
+    width: 100%;
+    height: 3em;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 1em;
+    font-size: 1rem;
+}
+
+.button {
+    text-align: center;
+}
+
+.loginForm button {
+    height: auto;
+    width: auto;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    padding: 13px 15px;
+    margin-left: 1em;
+    cursor: pointer;
+    background-color: hsl(53 100% 52%);
+    color: black;
+    font-weight: bold;
+    margin: auto;
+    transition: .5s;
+}
+
+.loginForm button:hover {
+    background-color: hsl(53 100% 42%);
+}
+
+.createAcc {
+    text-align: center;
+}
+
+.createAcc a {
+    text-decoration: none;
+    color: hsl(190 55% 51%);
+}
+
+.createAcc a:hover {
+    color: hsl(190 55% 61%);
+    text-decoration: underline;
+}
+
+.loginForm span {
+    color: red;
+    height: 0em;
+    margin-top: .2em;
+}
+
+@media  screen and (max-width: 1024px) {
+    .container {
+        width: 70%;
+    }
+}
