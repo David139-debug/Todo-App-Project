@@ -21,6 +21,12 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.use(express.static("client/build"));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+
 app.use("/register", require("./routes/register"));
 app.use("/login", require("./routes/login"));
 app.use("/getUser", require("./routes/getUser"));
