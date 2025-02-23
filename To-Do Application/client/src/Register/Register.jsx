@@ -81,7 +81,6 @@ const Register = ({onToggleForm}) => {
                 
                 const response = await axios.post("https://todo-app-project-eexq.onrender.com/register", newUser);
                 createSession(response.data);
-                console.log(response.data)
                 navigate("/todo");
         }
         } catch (err) {
