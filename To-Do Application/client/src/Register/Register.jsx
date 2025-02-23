@@ -79,7 +79,7 @@ const Register = ({onToggleForm}) => {
                     password: formData.password
                 };
                 
-                const response = await axios.post("https://todo-app-project-zj8d.onrender.com/register", newUser);
+                const response = await axios.post("https://todo-app-project-2cp4.onrender.com/register", newUser);
                 createSession(response.data);
                 navigate("/todo");
         }
