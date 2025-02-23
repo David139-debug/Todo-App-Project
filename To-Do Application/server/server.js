@@ -6,7 +6,10 @@ const connectDB = require("./config/connectDB");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
 const corsOptions = {
-    origin: "*",
+    origin: ["http://localhost:5173",
+             "https://lambent-cuchufli-b15fe2.netlify.app",
+             "https://67baf4b7e5cc5b71ef373e9d--precious-puppy-79387a.netlify.app/",
+             "https://todo-app-project-eexq.onrender.com"],
     methods: "GET,POST,PUT,DELETE",
 }
 
