@@ -9,7 +9,8 @@ const corsOptions = {
     origin: ["http://localhost:5173",
              "https://lambent-cuchufli-b15fe2.netlify.app/",
              "https://todo-app-project-eexq.onrender.com"],
-    methods: "GET,POST,PUT,DELETE"
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
 }
 
 require("dotenv").config();
