@@ -21,10 +21,10 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use(express.static("client/build"));
+app.use(express.static("client/dist"));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
 });
 
 app.use("/register", require("./routes/register"));
