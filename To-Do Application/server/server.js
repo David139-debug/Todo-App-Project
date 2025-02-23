@@ -7,11 +7,10 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
 const corsOptions = {
     origin: ["http://localhost:5173",
-             "https://lambent-cuchufli-b15fe2.netlify.app",
-             "https://67baf4b7e5cc5b71ef373e9d--precious-puppy-79387a.netlify.app/",
-             "https://precious-puppy-79387a.netlify.app/",
-             "https://todo-app-project-eexq.onrender.com"],
+             "https://todo-app-project-1.onrender.com"
+    ],
     methods: "GET,POST,PUT,DELETE",
+    credentials: true
 }
 
 require("dotenv").config();
