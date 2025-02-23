@@ -4,7 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connectDB");
 const mongoose = require("mongoose");
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const corsOptions = {
     origin: ["http://localhost:5173",
              "https://lambent-cuchufli-b15fe2.netlify.app",
