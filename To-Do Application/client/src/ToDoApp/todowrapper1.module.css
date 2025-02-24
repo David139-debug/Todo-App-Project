@@ -425,6 +425,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .menuContainer {
         position: absolute;
         padding: 1em;
+        width: 100%;
     }
 
     .menu {
