@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 5000;
 const corsOptions = {
     origin: ["http://localhost:5173",
              "https://todo-app-project-ds0f.onrender.com",
-             "https://todo-app-nhbt.onrender.com"
     ],
     methods: "GET,POST,PUT,DELETE",
     credentials: true
