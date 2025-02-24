@@ -198,8 +198,8 @@ const TodoWrapper1 = () => {
             ...response.data,
             date: task.date
         }
-        setAllTasks(t => [...t, formattedTask])
-        setDisplayedTasks(t => [...t, formattedTask]);
+        setAllTasks(t => [formattedTask, ...t])
+        setDisplayedTasks(t => [formattedTask, ...t]);
         resetInput();
     };
 
