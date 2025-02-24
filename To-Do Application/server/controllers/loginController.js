@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const handleLogin = async (req, res) => {
     const data = req.body;
-
+    console.log(data);
     const foundUser = await User.findOne({ email: data.email });
     if (!foundUser) {
         return res.status(400).json({ message: "Password or email are incorrect." });

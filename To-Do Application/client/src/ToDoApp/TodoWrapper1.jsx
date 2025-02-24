@@ -1,6 +1,7 @@
 import React, {useRef, useEffect, useState} from "react";
 import styles from "./todowrapper1.module.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import hamburgerIcon from "../ToDoApp/img/hamburger.png";
 import { destroySession, getSession } from "../Register/Session";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -290,7 +291,7 @@ const TodoWrapper1 = () => {
             <div className={styles.overlay} style={{display: overlayActive ? "block" : "none"}}></div>
 
             <div className={styles.menuContainer}>
-                <img src="src/ToDoApp/img/hamburger.png" className={styles.menu} onClick={handleOpenSidebar}/>
+                <img src={hamburgerIcon} className={styles.menu} onClick={handleOpenSidebar}/>
             </div>
 
             <div className={styles.sidebar}>
