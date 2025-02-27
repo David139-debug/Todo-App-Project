@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import styles from "./register.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
@@ -19,7 +19,6 @@ const Register = ({onToggleForm}) => {
     const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData(d => ({...d, [name]: value}));
-
     };
 
     const handleSubmit = async (e) => {
