@@ -2,7 +2,6 @@ import React, {useRef, useEffect, useState} from "react";
 import styles from "./todowrapper1.module.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import hamburgerIcon from "../ToDoApp/img/hamburger.png";
-import { destroySession, getSession } from "../Register/Session";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -23,7 +22,7 @@ const TodoWrapper1 = () => {
     const [displayedTasks, setDisplayedTasks] = useState([]);
     const [allTasks, setAllTasks] = useState([]);
     const [userName, setUserName] = useState("");
-    const [userId, setUserId] = useState(getSession());
+    const [userId, setUserId] = useState();
 
     let navigate = useNavigate();
 
@@ -38,6 +37,21 @@ const TodoWrapper1 = () => {
 
     const [overlayActive, setIsOverlayActive] = useState(false);
 
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get(`https://todo-app-nhbt.onrender.com/getUser`, { withCredentials: true });
+            setUserName(response.data.name);
+            setUserId(response.data._id);
+            if (response.data._id) {
+                navigate("/todo");
+            } else {
+                navigate("/login");
+            }
+        } catch (err) {
+            navigate("/login");
+        }
+    };
+
     const fetchData = async () => {
         try {
             const response = await axios.get("https://todo-app-nhbt.onrender.com/getAllTasks");
@@ -51,11 +65,6 @@ const TodoWrapper1 = () => {
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
-    };
-
-    const fetchUserData = async () => {
-        const response = await axios.get(`https://todo-app-nhbt.onrender.com/getUser/${userId}`);
-        setUserName(response.data.name);
     };
     
     useEffect(() => {
@@ -127,10 +136,13 @@ const TodoWrapper1 = () => {
     }, [sideBarOpen])
 
     const handleDocumentClick = (e) => {
-        if(!inputRef.current.contains(e.target)) {
+        if (!inputRef.current) return;
+    
+        if (!inputRef.current.contains(e.target)) {
             inputRef.current.style.height = "5.5em";
         }
     };
+    
 
     const resetInput = () => {
         inputRef.current.style.height = "5.5em";
@@ -198,8 +210,13 @@ const TodoWrapper1 = () => {
             ...response.data,
             date: task.date
         }
-        setAllTasks(t => [formattedTask, ...t])
-        setDisplayedTasks(t => [formattedTask, ...t]);
+        setAllTasks(t => 
+            [formattedTask, ...t].sort((a, b) => (a.priority === "High" ? -1 : b.priority === "High" ? 1 : 0))
+        );
+    
+        setDisplayedTasks(t => 
+            [formattedTask, ...t].sort((a, b) => (a.priority === "High" ? -1 : b.priority === "High" ? 1 : 0))
+        );
         resetInput();
     };
 
@@ -218,8 +235,6 @@ const TodoWrapper1 = () => {
                     task._id === id ? { ...task, status: "Completed" } : task
                 )
             );
-            showIcon(true);
-            
         } catch (err) {
             console.log(err);
         }
@@ -280,8 +295,8 @@ const TodoWrapper1 = () => {
         setDisplayedTasks(projectTasks);
     };
 
-    const handleLogout = () => {
-        destroySession();
+    const handleLogout = async () => {
+        await axios.post("https://todo-app-nhbt.onrender.com/logout", {}, { withCredentials: true });
         navigate("/login");
     };
 

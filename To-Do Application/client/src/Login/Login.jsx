@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./login.module.css";
 import Register from "../Register/Register";
 import { useNavigate } from "react-router-dom";
-import { createSession } from "../Register/Session";
 import axios from "axios";
 
 const Login = () => {
@@ -12,8 +11,19 @@ const Login = () => {
         password: "",
     });
     const [errors, setErrors] = useState({});
-
     const navigate = useNavigate();
+
+    const handleCheck = async () => {
+        try {
+            await axios.get(`https://todo-app-nhbt.onrender.com/getUser/loggedUser`, { withCredentials: true });
+        } catch (err) {
+            navigate("/todo");
+        }
+    };
+
+    useEffect(() => {
+        handleCheck();
+    }, []);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -40,11 +50,11 @@ const Login = () => {
         }
 
         try {
-            const response = await axios.post("https://todo-app-nhbt.onrender.com/login", formData);
-            createSession(response.data);
-            navigate("/todo");
+            await axios.post("https://todo-app-nhbt.onrender.com/login", formData, { withCredentials: true });
+            navigate("/todo");  
         } catch (err) {
             setErrors(prev => ({ ...prev, password: "Password or email incorrect." }));
+            navigate("/login");
         }
     };
     

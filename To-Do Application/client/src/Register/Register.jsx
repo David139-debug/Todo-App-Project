@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import styles from "./register.module.css";
-import { createSession } from "./Session";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
 
@@ -15,14 +14,6 @@ const Register = ({onToggleForm}) => {
     });
 
     const [errors, setErrors] = useState({});
-    const [password, setPassword] = useState("");
-
-    const nameRef = useRef(null);
-    const lastnameRef = useRef(null);
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
-    const repeatPasswordRef= useRef(null);
-
     const navigate = useNavigate()
 
     const handleChange = async (e) => {
@@ -31,9 +22,8 @@ const Register = ({onToggleForm}) => {
 
     };
 
-    const handleSubmit = async (e, id) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         let newErrors = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -65,29 +55,25 @@ const Register = ({onToggleForm}) => {
             setErrors(newErrors);
             return;
         }
-
         setErrors({});
-
-        try {
-            
-        const errorsCheck = Object.keys(newErrors).length;
-        if(errorsCheck === 0) {
-                const newUser = {
-                    name: formData.name,
-                    lastname: formData.lastname,
-                    email: formData.email,
-                    password: formData.password
+        try {    
+            const newUser = {
+                name: formData.name,
+                lastname: formData.lastname,
+                email: formData.email,
+                password: formData.password
                 };
-                
-                const response = await axios.post("https://todo-app-nhbt.onrender.com/register", newUser);
-                createSession(response.data);
-                navigate("/todo");
+                const response = await axios.post("https://todo-app-nhbt.onrender.com/register", newUser, { withCredentials: true });
+                if (response.status === 200) {
+                    navigate("/todo");
         }
         } catch (err) {
             if (err.response && err.response.status === 400) {
                 setErrors(prev => ({ ...prev, email: err.response.data.message || "Email already exists." }));
+                return;
             } else {
                 setErrors(prev => ({ ...prev, general: "Something went wrong. Please try again later." }));
+                navigate("/login");
             }
         }
     };
@@ -102,36 +88,36 @@ const Register = ({onToggleForm}) => {
 
                 <div className={styles.name}>
                     <label>Name</label>
-                    <input ref={nameRef} type="text" name="name" onChange={handleChange} value={formData.name} minLength={5} maxLength={25} required/>
+                    <input type="text" name="name" onChange={handleChange} value={formData.name} minLength={5} maxLength={25} required/>
                     {errors.name && <span>{errors.name}</span>}
                 </div>
 
                 <div>
                     <label>Last Name</label>
-                    <input ref={lastnameRef} type="text" name="lastname" onChange={handleChange} value={formData.lastname} minLength={5} maxLength={25} required/>
+                    <input type="text" name="lastname" onChange={handleChange} value={formData.lastname} minLength={5} maxLength={25} required/>
                     {errors.lastname && <span>{errors.lastname}</span>}
                 </div>
 
                 <div>
                     <label>Email</label>
-                    <input ref={emailRef} type="email" name="email" onChange={handleChange} minLength={5} maxLength={60} value={formData.email} />
+                    <input type="email" name="email" onChange={handleChange} minLength={5} maxLength={60} value={formData.email} />
                     {errors.email && <span>{errors.email}</span>}
                 </div>
 
                 <div>
                     <label>Password</label>
-                    <input ref={passwordRef} type="password" name="password" onChange={handleChange} value={formData.password} minLength={5} maxLength={50} required/>
+                    <input type="password" name="password" onChange={handleChange} value={formData.password} minLength={5} maxLength={50} required/>
                     {errors.password && <span>{errors.password}</span>}
                 </div>
 
                 <div>
                     <label>Repeat Password</label>
-                    <input ref={repeatPasswordRef} type="password" name="repeatPassword" onChange={handleChange} value={formData.repeatPassword} minLength={5} maxLength={50} required/>
+                    <input type="password" name="repeatPassword" onChange={handleChange} value={formData.repeatPassword} minLength={5} maxLength={50} required/>
                     {errors.repeatPassword && <span>{errors.repeatPassword}</span>}
                 </div>
 
                 <div className={styles.registerBtn}>
-                    <button type="submit" onClick={handleSubmit}>Create Account</button>
+                    <button type="submit">Create Account</button>
                 </div>
             </form>
         </div>

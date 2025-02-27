@@ -4,7 +4,6 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connectDB");
 const mongoose = require("mongoose");
-const path = require("path");
 const PORT = process.env.PORT || 5000;
 const corsOptions = {
     origin: ["http://localhost:5173",
@@ -19,12 +18,13 @@ connectDB();
 
 app.use(cookieParser());
 app.use(cors(corsOptions));
-
 app.use(express.json());
 
 app.use("/register", require("./routes/register"));
 app.use("/login", require("./routes/login"));
+app.use("/logout", require("./routes/logout"));
 app.use("/getUser", require("./routes/getUser"));
+app.use("/verify", require("./routes/verifyToken"));
 
 app.use("/addTask", require("./routes/addTask"));
 app.use("/removeTask", require("./routes/removeTask"));
