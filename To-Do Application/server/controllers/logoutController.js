@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
 
 const handleLogout = (req, res) => {
-    res.clearCookie("token", {
+    res.clearCookie("refreshToken", {
         httpOnly: true,
-        secure: true,
-        sameSite: "none"
+        secure: false,
+        sameSite: "strict"
     });
 
     res.status(200).json({ message: "Logout successful" });

@@ -62,7 +62,7 @@ const Register = ({onToggleForm}) => {
                 email: formData.email,
                 password: formData.password
                 };
-                const response = await axios.post("https://todo-app-nhbt.onrender.com/register", newUser, { withCredentials: true });
+                const response = await axios.post("http://localhost:5000/register", newUser, { withCredentials: true });
                 if (response.status === 200) {
                     navigate("/todo");
         }

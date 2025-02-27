@@ -15,7 +15,7 @@ const Login = () => {
 
     const handleCheck = async () => {
         try {
-            await axios.get(`https://todo-app-nhbt.onrender.com/getUser/loggedUser`, { withCredentials: true });
+            await axios.get(`http://localhost:5000/getUser/loggedUser`, { withCredentials: true });
         } catch (err) {
             navigate("/todo");
         }
@@ -50,7 +50,7 @@ const Login = () => {
         }
 
         try {
-            await axios.post("https://todo-app-nhbt.onrender.com/login", formData, { withCredentials: true });
+            await axios.post("http://localhost:5000/login", formData, { withCredentials: true });
             navigate("/todo");  
         } catch (err) {
             setErrors(prev => ({ ...prev, password: "Password or email incorrect." }));

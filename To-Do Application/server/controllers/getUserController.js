@@ -2,12 +2,12 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 const handleUser = async (req, res) => {
-    const token = req.cookies.token;
+    const refreshToken = req.cookies.refreshToken;
     try {
-        if (!token) {
+        if (!refreshToken) {
             return res.status(401).json({ message: "Not authorized." });
         }
-        const decoded = jwt.decode(token);
+        const decoded = jwt.decode(refreshToken);
         const foundUser = await User.findById(decoded.id);
         if (foundUser) {
             res.status(200).json(foundUser);
@@ -20,8 +20,8 @@ const handleUser = async (req, res) => {
 };
 
 const handleLoggedUser = (req, res) => {
-    const token = req.cookies.token;
-        if (token) {
+    const refreshToken = req.cookies.token;
+        if (refreshToken) {
             return res.status(403).json({ message: "Forbidden." });
         }
 };
