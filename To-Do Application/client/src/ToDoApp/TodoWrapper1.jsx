@@ -3,7 +3,7 @@ import styles from "./todowrapper1.module.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import hamburgerIcon from "../ToDoApp/img/hamburger.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 const TodoWrapper1 = () => {
 
@@ -39,22 +39,20 @@ const TodoWrapper1 = () => {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/getUser`, { withCredentials: true });
+            const response = await api.get(`https://todo-app-nhbt.onrender.com/getUser`, { withCredentials: true });
             setUserName(response.data.name);
             setUserId(response.data._id);
-            if (response.data._id) {
-                navigate("/todo");
-            } else {
+            navigate("/todo");
+        } catch (err) {
+            if (err.response.status === 401) {
                 navigate("/login");
             }
-        } catch (err) {
-            navigate("/login");
         }
-    };
+    }; 
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/getAllTasks");
+            const response = await api.get("https://todo-app-nhbt.onrender.com/getAllTasks");
             const tasks = response.data.filter(task => task.userId === userId);
             const formattedTasks = tasks.map(task => ({
                 ...task,
@@ -70,7 +68,7 @@ const TodoWrapper1 = () => {
     useEffect(() => {
         setSidebarActive(true);
         setCenterActive(true);
-        fetchUserData();
+        fetchUserData(); 
         fetchData();
     }, [userId]);
     
@@ -205,7 +203,7 @@ const TodoWrapper1 = () => {
 
         data.status = "Pending";
 
-        const response = await axios.post("http://localhost:5000/addTask", data);
+        const response = await api.post("https://todo-app-nhbt.onrender.com/addTask", data);
         const formattedTask = {
             ...response.data,
             date: task.date
@@ -221,7 +219,7 @@ const TodoWrapper1 = () => {
     };
 
     const handleRemoveTask =  async (id) => {
-        await axios.delete(`http://localhost:5000/removeTask/${id}`);
+        await api.delete(`https://todo-app-nhbt.onrender.com/removeTask/${id}`);
         const updatedTasks = displayedTasks.filter(task => task._id !== id);
         setDisplayedTasks(updatedTasks);
         setAllTasks(updatedTasks);
@@ -229,7 +227,7 @@ const TodoWrapper1 = () => {
 
     const handleCompletedTask = async (id) => {
         try {
-            await axios.put(`http://localhost:5000/removeTask/${id}/completed`);
+            await api.put(`https://todo-app-nhbt.onrender.com/removeTask/${id}/completed`);
             setDisplayedTasks(prevTasks => 
                 prevTasks.map(task => 
                     task._id === id ? { ...task, status: "Completed" } : task
@@ -296,7 +294,7 @@ const TodoWrapper1 = () => {
     };
 
     const handleLogout = async () => {
-        await axios.post("http://localhost:5000/logout", {}, { withCredentials: true });
+        await api.post("https://todo-app-nhbt.onrender.com/logout", {}, { withCredentials: true });
         navigate("/login");
     };
 

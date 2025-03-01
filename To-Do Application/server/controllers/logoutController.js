@@ -7,6 +7,12 @@ const handleLogout = (req, res) => {
         sameSite: "strict"
     });
 
+    res.clearCookie("accessToken", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "strict"
+    });
+
     res.status(200).json({ message: "Logout successful" });
 };
 

@@ -24,7 +24,7 @@ app.use("/register", require("./routes/register"));
 app.use("/login", require("./routes/login"));
 app.use("/logout", require("./routes/logout"));
 app.use("/getUser", require("./routes/getUser"));
-app.use("/verify", require("./routes/verifyToken"));
+app.use("/refresh", require("./routes/refreshToken"));
 
 app.use("/addTask", require("./routes/addTask"));
 app.use("/removeTask", require("./routes/removeTask"));

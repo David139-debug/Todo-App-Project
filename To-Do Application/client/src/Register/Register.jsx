@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./register.module.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import api from "../api";
 
 const Register = ({onToggleForm}) => {
 
@@ -62,7 +62,7 @@ const Register = ({onToggleForm}) => {
                 email: formData.email,
                 password: formData.password
                 };
-                const response = await axios.post("http://localhost:5000/register", newUser, { withCredentials: true });
+                const response = await api.post("https://todo-app-nhbt.onrender.com/register", newUser, { withCredentials: true });
                 if (response.status === 200) {
                     navigate("/todo");
         }
