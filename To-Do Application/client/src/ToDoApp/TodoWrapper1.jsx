@@ -212,7 +212,7 @@ const TodoWrapper1 = () => {
             date: task.date
         }
 
-        const priorityOrder = { "High": 3, "Medium": 2, "Low": 1 };
+        const priorityOrder = { "High": 3, "Low": 2 };
 
         setAllTasks(t => 
             [formattedTask, ...t].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority])
