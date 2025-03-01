@@ -13,7 +13,6 @@ api.interceptors.response.use(
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                await api.get("/refresh");
                 return api(originalRequest);
             } catch (err) {
                 console.error("Failed to refresh token.");
