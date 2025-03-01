@@ -54,7 +54,7 @@ const Login = () => {
             navigate("/todo");
         } catch (err) {
             setErrors(prev => ({ ...prev, password: "Password or email incorrect." }));
-            navigate("/login");
+            return;
         }
     };
     
