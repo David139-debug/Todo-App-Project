@@ -18,6 +18,7 @@ const TodoWrapper1 = () => {
     const highPriorityRef = useRef(null);
     const lowPriorityRef = useRef(null);
     const navRef = useRef(null);
+    const menuRef = useRef(null);
 
     const [displayedTasks, setDisplayedTasks] = useState([]);
     const [allTasks, setAllTasks] = useState([]);
@@ -113,6 +114,7 @@ const TodoWrapper1 = () => {
             setSidebarActive(true);
             setIsOverlayActive(true);
             navRef.current.style.transform = "translateX(0%)";
+            menuRef.current.style.display = "none";
         }
     };
 
@@ -120,6 +122,7 @@ const TodoWrapper1 = () => {
         if(window.innerWidth <= 875) {
             if(!navRef.current.contains(e.target)) {
                 navRef.current.style.transform = "translateX(-100%)";
+                menuRef.current.style.display = "flex";
                 setIsOverlayActive(false);
             }
         }
@@ -304,7 +307,7 @@ const TodoWrapper1 = () => {
             <div className={styles.overlay} style={{display: overlayActive ? "block" : "none"}}></div>
 
             <div className={styles.menuContainer}>
-                <img src={hamburgerIcon} className={styles.menu} onClick={handleOpenSidebar}/>
+                <img ref={menuRef} src={hamburgerIcon} className={styles.menu} onClick={handleOpenSidebar}/>
             </div>
 
             <div className={styles.sidebar}>
