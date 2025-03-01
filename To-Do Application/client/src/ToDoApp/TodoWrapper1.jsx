@@ -211,12 +211,15 @@ const TodoWrapper1 = () => {
             ...response.data,
             date: task.date
         }
+
+        const priorityOrder = { "High": 3, "Medium": 2, "Low": 1 };
+
         setAllTasks(t => 
-            [formattedTask, ...t].sort((a, b) => (a.priority === "High" ? -1 : b.priority === "High" ? 1 : 0))
+            [formattedTask, ...t].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority])
         );
-    
+        
         setDisplayedTasks(t => 
-            [formattedTask, ...t].sort((a, b) => (a.priority === "High" ? -1 : b.priority === "High" ? 1 : 0))
+            [formattedTask, ...t].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority])
         );
         resetInput();
     };
