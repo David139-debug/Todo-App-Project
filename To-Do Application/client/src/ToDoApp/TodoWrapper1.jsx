@@ -166,64 +166,63 @@ const TodoWrapper1 = () => {
     }, [isInputOpen]);
 
     const addTask = async () => {
-        if(!taskValidation()) {
+        if (!taskValidation()) {
             return;
         }
-
-        if(task.date === "") {
-            let today = new Date().toISOString().split('T')[0]; 
-            task.date = today;
+    
+        // Kopiramo task da izbegnemo mutiranje originalnog objekta
+        let newTask = { ...task };
+    
+        // Postavljamo podrazumevane vrednosti ako nisu zadate
+        if (!newTask.date) {
+            newTask.date = new Date().toISOString().split('T')[0];
         }
-
-        if(task.priority === "") {
-            task.priority = "Low";
+    
+        if (!newTask.priority) {
+            newTask.priority = "Low"; // Prioritet može biti samo "High" ili "Low"
         }
-
-        let backgroundColor = "";
-        if (task.type === "Daily") {
-            backgroundColor= "#006D6F";
-        }
-        else if(task.type === "Personal") {
-            backgroundColor = "#ADD8E6";
-        } 
-        else if(task.type === "Work") {
-            backgroundColor = "#708090";
-        }
-        else if(task.type === "Projects") {
-            backgroundColor = "#FFD700";
-        }
-        
+    
+        // Postavljanje background boje na osnovu tipa zadatka
+        const backgroundColors = {
+            "Daily": "#006D6F",
+            "Personal": "#ADD8E6",
+            "Work": "#708090",
+            "Projects": "#FFD700"
+        };
+        let backgroundColor = backgroundColors[newTask.type] || "#FFFFFF"; // Default: bela ako nije prepoznat tip
+    
+        // Kreiranje podataka za slanje
         const data = {
-            name: task.name,
-            date: task.date,
-            priority: task.priority,
-            type: task.type,
-            id: task.id,
+            ...newTask,
             userId: userId,
             backgroundColor: backgroundColor,
-            status: task.status
+            status: "Pending"
         };
-
-        data.status = "Pending";
-
-        const response = await api.post("https://todo-app-nhbt.onrender.com/addTask", data);
-        const formattedTask = {
-            ...response.data,
-            date: task.date
+    
+        try {
+            const response = await api.post("https://todo-app-nhbt.onrender.com/addTask", data);
+            const formattedTask = {
+                ...response.data,
+                date: newTask.date
+            };
+    
+            // Definišemo sortiranje po prioritetu ("High" ide gore)
+            const priorityOrder = { "High": 2, "Low": 1 };
+    
+            setAllTasks(prevTasks =>
+                [formattedTask, ...prevTasks].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority])
+            );
+    
+            setDisplayedTasks(prevTasks =>
+                [formattedTask, ...prevTasks].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority])
+            );
+    
+            resetInput();
+        } catch (error) {
+            console.error("Error adding task:", error);
         }
-
-        const priorityOrder = { "High": 3, "Low": 2 };
-
-        setAllTasks(t => 
-            [formattedTask, ...t].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority])
-        );
-        
-        setDisplayedTasks(t => 
-            [formattedTask, ...t].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority])
-        );
-        resetInput();
     };
-
+    
     const handleRemoveTask =  async (id) => {
         await api.delete(`https://todo-app-nhbt.onrender.com/removeTask/${id}`);
         const updatedTasks = displayedTasks.filter(task => task._id !== id);
