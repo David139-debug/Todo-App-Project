@@ -55,18 +55,16 @@ const TodoWrapper1 = () => {
         try {
             const response = await api.get("https://todo-app-nhbt.onrender.com/getAllTasks");
     
-            // Filtriranje po userId
             const tasks = response.data.filter(task => task.userId === userId);
     
-            // Formatiranje datuma i sortiranje po prioritetu
             const priorityOrder = { "High": 2, "Low": 1 };
     
             const formattedTasks = tasks
                 .map(task => ({
                     ...task,
-                    date: task.date ? task.date.split("T")[0] : "" // Proveravamo da `date` postoji
+                    date: task.date ? task.date.split("T")[0] : ""
                 }))
-                .sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]); // Sortiranje
+                .sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
     
             setAllTasks(formattedTasks);
             setDisplayedTasks(formattedTasks);

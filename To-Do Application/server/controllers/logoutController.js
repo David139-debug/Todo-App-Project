@@ -1,5 +1,3 @@
-const jwt = require("jsonwebtoken");
-
 const handleLogout = (req, res) => {
     res.clearCookie("refreshToken", {
         httpOnly: true,
