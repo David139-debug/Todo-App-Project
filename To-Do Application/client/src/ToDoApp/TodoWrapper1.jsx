@@ -241,7 +241,7 @@ const TodoWrapper1 = () => {
 
     const handleCompletedTask = async (id) => {
         try {
-            await api.put(`https://todo-app-nhbt.onrender.com/removeTask/${id}/completed`);
+            const response = await api.put(`https://todo-app-nhbt.onrender.com/removeTask/${id}/completed`);
             setDisplayedTasks(prevTasks => 
                 prevTasks.map(task => 
                     task._id === id ? response.data : task
