@@ -247,6 +247,12 @@ const TodoWrapper1 = () => {
                     task._id === id ? { ...task, status: "Completed" } : task
                 )
             );
+
+            setDisplayedTasks(prevTasks => 
+                prevTasks.map(task => 
+                    task._id === id ? { ...task, status: "Completed" } : task
+                )
+            );
         } catch (err) {
             console.log(err);
         }
