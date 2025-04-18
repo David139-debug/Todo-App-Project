@@ -10,14 +10,14 @@ const refresh = (req, res) => {
         const newAccessToken = jwt.sign(
             { id: user.id },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "10s" }
+            { expiresIn: "15min" }
         );
 
         res.cookie("accessToken", newAccessToken, {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            maxAge: 10 * 1000
+            maxAge: 15 * 60 * 1000
         })
 
         res.status(200).json({ message: "Token refreshed" });

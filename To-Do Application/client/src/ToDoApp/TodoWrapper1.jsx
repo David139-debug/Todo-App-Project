@@ -331,7 +331,7 @@ const TodoWrapper1 = () => {
     };
 
     const handleLogout = async () => {
-        await api.post("http://localhost:5000/logout", {}, { withCredentials: true });
+        await api.post("https://todo-app-nhbt.onrender.com/logout", {}, { withCredentials: true });
         navigate("/login");
     };
 
