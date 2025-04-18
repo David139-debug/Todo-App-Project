@@ -1,4 +1,5 @@
 import axios from "axios";
+import { emitAccessTokenRefresh } from "./event";
 
 const api = axios.create({
     baseURL: "http://localhost:4000",
@@ -44,6 +45,7 @@ api.interceptors.response.use(
                 const newAccessToken = data.accessToken;
 
                 api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+                emitAccessTokenRefresh(newAccessToken);
                 processQueue(null, newAccessToken);
 
                 return api(originalRequest);

@@ -3,6 +3,7 @@ import styles from "./todowrapper1.module.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import hamburgerIcon from "../ToDoApp/img/hamburger.png";
 import { useNavigate } from "react-router-dom";
+import { onAccessTokenRefresh } from "../event";
 import api from "../api";
 
 const TodoWrapper1 = () => {
@@ -43,14 +44,22 @@ const TodoWrapper1 = () => {
             const response = await api.get(`http://localhost:4000/getUser`, { withCredentials: true });
             setUserName(response.data.name);
             setUserId(response.data._id);
-            navigate("/todo");
         } catch (err) {
-            console.log(err.response.data)
-            if (err.response.status === 401) {
+            if (err.response.data.message === "Refresh Token not found.")  {
                 navigate("/login");
             }
         }
-    }; 
+    };
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+
+    useEffect(() => {
+        if (userId) {
+            fetchData();
+        }
+    }, [userId]);
 
     const fetchData = async () => {
         try {
@@ -74,14 +83,21 @@ const TodoWrapper1 = () => {
         }
     };
     
-    
     useEffect(() => {
         setSidebarActive(true);
         setCenterActive(true);
-        fetchUserData(); 
         fetchData();
     }, [userId]);
+
+    useEffect(() => {
+        const unsubscribe = onAccessTokenRefresh(() => {
+            fetchUserData();
+        });
     
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
     const handleChange = (e) => {
         setTask(t => ({

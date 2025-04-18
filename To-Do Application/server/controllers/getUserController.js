@@ -3,6 +3,12 @@ const jwt = require("jsonwebtoken");
 
 const handleUser = async (req, res) => {
     const accessToken = req.cookies.accessToken;
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+        return res.status(400).json({ message: "Refresh Token not found." });
+    }
+
     if (!accessToken) {
         return res.status(401).json({ message: "Not authorized." });
     }

@@ -32,7 +32,7 @@ const handleLogin = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            maxAge: 15 * 60 * 1000
+            maxAge: 10 * 1000
         });
 
         res.cookie("refreshToken", refreshToken, {

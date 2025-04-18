@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 const refresh = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-    console.log("refreshed")
     if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
 
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
@@ -11,14 +10,14 @@ const refresh = (req, res) => {
         const newAccessToken = jwt.sign(
             { id: user.id },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "15m" }
+            { expiresIn: "10s" }
         );
 
         res.cookie("accessToken", newAccessToken, {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            maxAge: 15 * 60 * 1000
+            maxAge: 10 * 1000
         })
 
         res.status(200).json({ message: "Token refreshed" });
