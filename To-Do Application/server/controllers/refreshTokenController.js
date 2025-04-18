@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const refresh = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
+    console.log("refreshed")
     if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
 
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {

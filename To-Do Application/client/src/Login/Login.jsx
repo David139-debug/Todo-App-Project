@@ -15,7 +15,7 @@ const Login = () => {
 
     const handleCheck = async () => {
         try {
-            await api.get(`https://todo-app-nhbt.onrender.com/getUser/loggedUser`, { withCredentials: true });
+            await api.get(`http://localhost:4000/getUser/loggedUser`, { withCredentials: true });
         } catch (err) {
             navigate("/todo");
         }
@@ -50,7 +50,7 @@ const Login = () => {
         }
 
         try {
-            await api.post("https://todo-app-nhbt.onrender.com/login", formData, { withCredentials: true });
+            await api.post("http://localhost:4000/login", formData, { withCredentials: true });
             navigate("/todo");
         } catch (err) {
             setErrors(prev => ({ ...prev, password: "Password or email incorrect." }));

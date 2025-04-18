@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const handleUser = async (req, res) => {
     const accessToken = req.cookies.accessToken;
     if (!accessToken) {
-        return res.status(401).json({ message: "Not authorized." });
+        return res.status(400).json({ message: "Not authorized." });
     }
 
     try {
