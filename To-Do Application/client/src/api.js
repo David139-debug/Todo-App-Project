@@ -2,7 +2,7 @@ import axios from "axios";
 import { emitAccessTokenRefresh } from "./event";
 
 const api = axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: "https://todo-app-nhbt.onrender.com",
     withCredentials: true
 });
 
@@ -41,7 +41,7 @@ api.interceptors.response.use(
             isRefreshing = true;
 
             try {
-                const { data } = await api.post(`http://localhost:4000/refresh`);
+                const { data } = await api.post(`https://todo-app-nhbt.onrender.com/refresh`);
                 const newAccessToken = data.accessToken;
 
                 api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;

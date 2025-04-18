@@ -41,7 +41,7 @@ const TodoWrapper1 = () => {
 
     const fetchUserData = async () => {
         try {
-            const response = await api.get(`http://localhost:4000/getUser`, { withCredentials: true });
+            const response = await api.get(`https://todo-app-nhbt.onrender.com/getUser`, { withCredentials: true });
             setUserName(response.data.name);
             setUserId(response.data._id);
         } catch (err) {
@@ -63,7 +63,7 @@ const TodoWrapper1 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await api.get("http://localhost:4000/getAllTasks");
+            const response = await api.get("https://todo-app-nhbt.onrender.com/getAllTasks");
     
             const tasks = response.data.filter(task => task.userId === userId);
     
@@ -231,7 +231,7 @@ const TodoWrapper1 = () => {
 
         data.status = "Pending";
 
-        const response = await api.post("http://localhost:4000/addTask", data);
+        const response = await api.post("https://todo-app-nhbt.onrender.com/addTask", data);
         const formattedTask = {
             ...response.data,
             date: task.date
@@ -250,7 +250,7 @@ const TodoWrapper1 = () => {
     };
 
     const handleRemoveTask =  async (id) => {
-        await api.delete(`http://localhost:4000/removeTask/${id}`);
+        await api.delete(`https://todo-app-nhbt.onrender.com/removeTask/${id}`);
         const updatedTasks = displayedTasks.filter(task => task._id !== id);
         setDisplayedTasks(updatedTasks);
         setAllTasks(updatedTasks);
