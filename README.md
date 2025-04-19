@@ -1,7 +1,7 @@
 # Todo-App-Project
-* Full-stack managment application developed using MERN stack.
-* Designed for organizing tasks, setting priorities, due dates, and managing productivity.
-* Application has also implemented authorization, filtering and responsive UI layout.
+A full-stack task management application developed using the **MERN stack**.  
+Designed for organizing tasks, setting priorities, due dates, and managing productivity.  
+The application includes user authentication, task filtering, and a responsive UI layout.
 
 ## Features
 * JSON Web Token authorization.
