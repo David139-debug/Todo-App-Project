@@ -34,7 +34,8 @@
 ## Setup 
 If you want to try Todo App Project, please feel free to clone my repository and enter following commands in your terminal:
 
-`cd Todo-App-Project<br />
-cd To-Do Application<br />
-npm install<br />
-npm run dev`
+```bash
+cd Todo-App-Project
+cd To-Do Application
+npm install
+npm run dev
