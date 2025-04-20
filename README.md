@@ -31,6 +31,10 @@ The application includes user authentication, task filtering, and a responsive U
 * JWT
 * bcrypt
 
+# Note
+Please allow about 50 seconds for the server to wake up after making an API request, due to Render free tier limitations.
+Also, after logging in, please wait at least 25 seconds for the dashboard to load properly.
+
 ## Setup 
 If you want to try Todo App Project, please feel free to clone my repository and enter following commands in your terminal:
 
